@@ -10,239 +10,559 @@
     <meta property="og:description" content="Clash客户端下载与Clash机场推荐，汇总国内外优质翻墙节点机场">
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://ct.shuaifeng.xin/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #00d4ff;
+            --primary-dark: #0099ff;
+            --accent: #ffd700;
+            --bg-dark: #0a0a1a;
+            --bg-card: rgba(255,255,255,0.08);
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.7);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        body { 
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-dark);
+            background-image: 
+                radial-gradient(ellipse at top, #1a1a3e 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, #0f3460 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(102,126,234,0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(118,75,162,0.15) 0%, transparent 40%);
+            min-height: 100vh;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        
+        /* Header */
+        .header { text-align: center; margin-bottom: 50px; position: relative; }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0,212,255,0.2) 0%, transparent 70%);
+            z-index: -1;
+        }
+        h1 { 
+            font-size: 42px; 
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 60px rgba(0,212,255,0.5);
+        }
+        .header p { color: var(--text-muted); font-size: 16px; }
+        
+        /* Section */
+        .section { margin-bottom: 50px; }
+        .section-title { 
+            font-size: 28px; 
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid;
+            border-image: linear-gradient(90deg, var(--primary), transparent) 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-title .icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        /* Cards Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .card:hover { 
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: rgba(0,212,255,0.3);
+        }
+        .card:hover::before { opacity: 1; }
+        
+        .card h3 { 
+            font-size: 20px; 
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        .card p { 
+            color: var(--text-muted); 
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .card .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            background: rgba(255,0,100,0.2);
+            color: #ff6496;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        /* Buttons */
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--gradient);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 10px 30px rgba(102,126,234,0.4);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 15px;
+            border-radius: 12px;
+            background: rgba(0,0,0,0.2);
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            font-size: 14px;
+        }
+        th, td { 
+            padding: 14px 16px; 
+            text-align: left; 
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        th { 
+            background: rgba(0,212,255,0.1); 
+            color: var(--primary);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        tr:hover td { background: rgba(255,255,255,0.03); }
+        td:last-child, th:last-child { text-align: right; }
+        
+        /* Airport Card */
+        .airport-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        .airport-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,212,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .airport-card .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .airport-card h3 {
+            font-size: 22px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .airport-card .number {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,212,255,0.5), transparent);
+            margin: 40px 0;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 28px; }
+            .section-title { font-size: 22px; }
+            .card { padding: 20px; }
+            .airport-card { padding: 20px; }
+            .btn { padding: 10px 18px; font-size: 13px; }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .airport-card { animation: fadeInUp 0.5s ease forwards; }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Clash官网导航(2026-04最新)</h1>
-
-        <h2>Clash客户端</h2>
-        
-        <div class="card">
-            <h3>Clash Verge Rev</h3>
-            <p>推荐客户端，功能强大</p>
-            <a class="btn" href="https://github.com/clash-verge-rev/clash-verge-rev/releases" target="_blank">下载地址</a>
-            <a class="btn btn-secondary" href="https://clashvergerev.org/" target="_blank">使用教程</a>
+        <div class="header">
+            <h1>Clash官网导航</h1>
+            <p>2026年最全Clash客户端下载与机场推荐</p>
         </div>
 
-        <div class="card">
-            <h3>Clash Mi</h3>
-            <a class="btn" href="https://github.com/KaringX/clashmi/releases" target="_blank">下载地址</a>
-            <a class="btn btn-secondary" href="https://clash-mi.org/" target="_blank">使用教程</a>
-        </div>
-
-        <div class="card">
-            <h3>ClashX Meta</h3>
-            <a class="btn" href="https://github.com/MetaCubeX/ClashX.Meta/releases" target="_blank">下载地址</a>
-            <a class="btn btn-secondary" href="https://clashxmeta.org/" target="_blank">使用教程</a>
-        </div>
-
-        <div class="card">
-            <h3>Clash Meta For Android</h3>
-            <a class="btn" href="https://github.com/MetaCubeX/ClashMetaForAndroid/releases" target="_blank">下载地址</a>
-            <a class="btn btn-secondary" href="https://clashmetaforandroid.org/" target="_blank">使用教程</a>
-        </div>
-
-        <div class="card">
-            <h3>Hiddify Next</h3>
-            <a class="btn" href="https://github.com/hiddify/hiddify-app/releases" target="_blank">下载地址</a>
-            <a class="btn btn-secondary" href="https://hiddifynext.org/" target="_blank">使用教程</a>
-        </div>
-
-        <div class="card">
-            <h3>FlClash</h3>
-            <a class="btn" href="https://github.com/chen08209/FlClash/releases" target="_blank">下载地址</a>
-            <a class="btn btn-secondary" href="https://getflclash.org/" target="_blank">使用教程</a>
-        </div>
-
-        <div class="card">
-            <h3>Clash Party</h3>
-            <a class="btn" href="https://github.com/mihomo-party-org/clash-party/releases" target="_blank">下载地址</a>
-            <a class="btn btn-secondary" href="https://clash-party.org/" target="_blank">使用教程</a>
-        </div>
-
-        <div class="card">
-            <h3>Clash Nyanpasu</h3>
-            <a class="btn" href="https://github.com/libnyanpasu/clash-nyanpasu/releases" target="_blank">下载地址</a>
-            <a class="btn btn-secondary" href="https://clashnyanpasu.org/" target="_blank">使用教程</a>
+        <div class="section">
+            <h2 class="section-title">
+                <span class="icon">📱</span>
+                Clash客户端
+            </h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Clash Verge Rev <span class="tag">推荐</span></h3>
+                    <p>推荐客户端，功能强大，支持多平台</p>
+                    <div class="btn-group">
+                        <a class="btn" href="https://github.com/clash-verge-rev/clash-verge-rev/releases" target="_blank">下载</a>
+                        <a class="btn btn-secondary" href="https://clashvergerev.org/" target="_blank">教程</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Clash Mi</h3>
+                    <p>简洁易用的Clash客户端</p>
+                    <div class="btn-group">
+                        <a class="btn" href="https://github.com/KaringX/clashmi/releases" target="_blank">下载</a>
+                        <a class="btn btn-secondary" href="https://clash-mi.org/" target="_blank">教程</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>ClashX Meta</h3>
+                    <p>功能丰富的Clash客户端</p>
+                    <div class="btn-group">
+                        <a class="btn" href="https://github.com/MetaCubeX/ClashX.Meta/releases" target="_blank">下载</a>
+                        <a class="btn btn-secondary" href="https://clashxmeta.org/" target="_blank">教程</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Clash Meta For Android</h3>
+                    <p>安卓平台Clash客户端</p>
+                    <div class="btn-group">
+                        <a class="btn" href="https://github.com/MetaCubeX/ClashMetaForAndroid/releases" target="_blank">下载</a>
+                        <a class="btn btn-secondary" href="https://clashmetaforandroid.org/" target="_blank">教程</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Hiddify Next</h3>
+                    <p>全平台代理客户端</p>
+                    <div class="btn-group">
+                        <a class="btn" href="https://github.com/hiddify/hiddify-app/releases" target="_blank">下载</a>
+                        <a class="btn btn-secondary" href="https://hiddifynext.org/" target="_blank">教程</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>FlClash</h3>
+                    <p>轻量级代理客户端</p>
+                    <div class="btn-group">
+                        <a class="btn" href="https://github.com/chen08209/FlClash/releases" target="_blank">下载</a>
+                        <a class="btn btn-secondary" href="https://getflclash.org/" target="_blank">教程</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Clash Party</h3>
+                    <p>mihomo party分支客户端</p>
+                    <div class="btn-group">
+                        <a class="btn" href="https://github.com/mihomo-party-org/clash-party/releases" target="_blank">下载</a>
+                        <a class="btn btn-secondary" href="https://clash-party.org/" target="_blank">教程</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Clash Nyanpasu</h3>
+                    <p>现代化UI的Clash客户端</p>
+                    <div class="btn-group">
+                        <a class="btn" href="https://github.com/libnyanpasu/clash-nyanpasu/releases" target="_blank">下载</a>
+                        <a class="btn btn-secondary" href="https://clashnyanpasu.org/" target="_blank">教程</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="divider"></div>
 
-        <h2>Clash节点推荐 (2026-04)</h2>
+        <div class="section">
+            <h2 class="section-title">
+                <span class="icon">☁️</span>
+                Clash节点推荐
+            </h2>
 
-        <div class="card">
-            <h3>1. 扬帆云机场</h3>
-            <p>扬帆云机场是某实力老牌机场旗下新开便宜机场，也是一家用低价提供高端线路节点的科学上网魔法上网加速器梯子。</p>
-            <a class="btn" href="goto.html?channel=yangfanyun" target="_blank">访问官网</a>
-        </div>
-        <div class="card">
-            <table>
-                <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
-                <tr><td>LV1套餐</td><td>按月付</td><td>15.99</td><td>100 GB</td><td>2</td></tr>
-                <tr><td>LV2套餐</td><td>按月付</td><td>29.99</td><td>200 GB</td><td>3</td></tr>
-                <tr><td>LV3套餐</td><td>按月付</td><td>39.99</td><td>400 GB</td><td>4</td></tr>
-                <tr><td>LV4套餐</td><td>按月付</td><td>49.99</td><td>700 GB</td><td>6</td></tr>
-                <tr><td>旗舰版套餐-大流量</td><td>按月付</td><td>89.99</td><td>1200 GB</td><td>6</td></tr>
-            </table>
+            <div class="airport-card">
+                <div class="header-row">
+                    <h3><span class="number">1</span> 扬帆云机场</h3>
+                    <a class="btn" href="goto.html?channel=yangfanyun" target="_blank">访问官网 →</a>
+                </div>
+                <p>扬帆云机场是某实力老牌机场旗下新开便宜机场，用低价提供高端线路节点。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
+                        <tr><td>LV1套餐</td><td>按月付</td><td>¥15.99</td><td>100 GB</td><td>2</td></tr>
+                        <tr><td>LV2套餐</td><td>按月付</td><td>¥29.99</td><td>200 GB</td><td>3</td></tr>
+                        <tr><td>LV3套餐</td><td>按月付</td><td>¥39.99</td><td>400 GB</td><td>4</td></tr>
+                        <tr><td>LV4套餐</td><td>按月付</td><td>¥49.99</td><td>700 GB</td><td>6</td></tr>
+                        <tr><td>旗舰版-大流量</td><td>按月付</td><td>¥89.99</td><td>1200 GB</td><td>6</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="airport-card">
+                <div class="header-row">
+                    <h3><span class="number">2</span> 疾风云</h3>
+                    <a class="btn" href="goto.html?channel=jfcloud" target="_blank">访问官网 →</a>
+                </div>
+                <p>JFCloud疾风云机场，实力老牌机场旗下的新开分站，低价提供优质中高端翻墙节点。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
+                        <tr><td>入门版</td><td>按月付</td><td>¥13.99</td><td>50 GB</td><td>2</td></tr>
+                        <tr><td>基础版</td><td>按月付</td><td>¥18.99</td><td>100 GB</td><td>3</td></tr>
+                        <tr><td>标准版</td><td>按月付</td><td>¥29.99</td><td>200 GB</td><td>3</td></tr>
+                        <tr><td>高级版</td><td>按月付</td><td>¥39.99</td><td>350 GB</td><td>5</td></tr>
+                        <tr><td>旗舰版</td><td>按月付</td><td>¥59.99</td><td>600 GB</td><td>8</td></tr>
+                        <tr><td>旗舰版大流量</td><td>按月付</td><td>¥99.99</td><td>1200 GB</td><td>10</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="airport-card">
+                <div class="header-row">
+                    <h3><span class="number">3</span> 大哥云</h3>
+                    <a class="btn" href="goto.html?channel=dageyun" target="_blank">访问官网 →</a>
+                </div>
+                <p>大哥云是一家海外团队运营的翻墙机场，提供Trojan翻墙节点，有直连、隧道中转和IPLC内网专线。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
+                        <tr><td>VIP1 小流量</td><td>按年付</td><td>¥88.00</td><td>15 GB</td><td>无限制</td></tr>
+                        <tr><td>套餐A</td><td>按月付</td><td>¥19.90</td><td>100 GB</td><td>无限制</td></tr>
+                        <tr><td>套餐A</td><td>按季付</td><td>¥69.00</td><td>200 GB</td><td>无限制</td></tr>
+                        <tr><td>套餐A</td><td>按年付</td><td>¥199.00</td><td>300 GB</td><td>无限制</td></tr>
+                        <tr><td>套餐B</td><td>按月付</td><td>¥29.90</td><td>150 GB</td><td>无限制</td></tr>
+                        <tr><td>套餐B</td><td>按季付</td><td>¥129.00</td><td>300 GB</td><td>无限制</td></tr>
+                        <tr><td>套餐B</td><td>按年付</td><td>¥299.00</td><td>500 GB</td><td>无限制</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="airport-card">
+                <div class="header-row">
+                    <h3><span class="number">4</span> 闪狐云</h3>
+                    <a class="btn" href="goto.html?channel=flashfox" target="_blank">访问官网 →</a>
+                </div>
+                <p>闪狐云通过五大运营商 BGP+IPLC 动态优化和国际多个出口节点，采用TLS协议加密技术。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
+                        <tr><td>Basic</td><td>按月付</td><td>¥20.00</td><td>120 GB</td><td>无限制</td></tr>
+                        <tr><td>Standard</td><td>按月付</td><td>¥40.00</td><td>240 GB</td><td>无限制</td></tr>
+                        <tr><td>Advanced</td><td>按月付</td><td>¥72.00</td><td>500 GB</td><td>无限制</td></tr>
+                        <tr><td>Premium</td><td>按月付</td><td>¥125.00</td><td>1000 GB</td><td>无限制</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="airport-card">
+                <div class="header-row">
+                    <h3><span class="number">5</span> 肥猫云</h3>
+                    <a class="btn" href="goto.html?channel=fatcatcloud" target="_blank">访问官网 →</a>
+                </div>
+                <p>肥猫云机场成立于2023年，支持Clash一键订阅，支持Trojan协议。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
+                        <tr><td>年付加强版</td><td>按年付</td><td>¥96.00</td><td>60 GB</td><td>无限制</td></tr>
+                        <tr><td>基础套餐</td><td>按月付</td><td>¥20.00</td><td>120 GB</td><td>无限制</td></tr>
+                        <tr><td>标准套餐</td><td>按月付</td><td>¥40.00</td><td>300 GB</td><td>无限制</td></tr>
+                        <tr><td>旗舰套餐</td><td>按月付</td><td>¥100.00</td><td>700 GB</td><td>无限制</td></tr>
+                        <tr><td>企业套餐</td><td>按月付</td><td>¥180.00</td><td>1500 GB</td><td>无限制</td></tr>
+                        <tr><td>专享节点</td><td>按月付</td><td>¥600.00</td><td>500 GB</td><td>无限制</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="airport-card">
+                <div class="header-row">
+                    <h3><span class="number">6</span> CyberGuard加速器</h3>
+                    <a class="btn" href="goto.html?channel=cyberguard" target="_blank">访问官网 →</a>
+                </div>
+                <p>CyberGuard 机场2023年开始运营，线路有公网中转、IPLC和IEPL专线。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
+                        <tr><td>轻量套餐</td><td>按月付</td><td>¥18.00</td><td>100 GB</td><td>无限制</td></tr>
+                        <tr><td>标准套餐</td><td>按月付</td><td>¥28.00</td><td>300 GB</td><td>无限制</td></tr>
+                        <tr><td>高速套餐</td><td>按月付</td><td>¥50.00</td><td>600 GB</td><td>无限制</td></tr>
+                        <tr><td>企业套餐</td><td>按月付</td><td>¥200.00</td><td>2000 GB</td><td>无限制</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="airport-card">
+                <div class="header-row">
+                    <h3><span class="number">7</span> 龙猫云</h3>
+                    <a class="btn" href="goto.html?channel=totorocloud" target="_blank">访问官网 →</a>
+                </div>
+                <p>Totoro Cloud龙猫云是一家精品小众专线机场，采用Shadowsocks协议，IPLC专线节点，对Netflix、Disney+和ChatGPT解锁支持较好。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
+                        <tr><td>VIP1套餐</td><td>按月付</td><td>¥15.00</td><td>100 GB</td><td>无限制</td></tr>
+                        <tr><td>VIP2套餐</td><td>按月付</td><td>¥30.00</td><td>200 GB</td><td>无限制</td></tr>
+                        <tr><td>VIP3套餐</td><td>按月付</td><td>¥60.00</td><td>400 GB</td><td>无限制</td></tr>
+                        <tr><td>VIP4套餐</td><td>按月付</td><td>¥120.00</td><td>1000 GB</td><td>无限制</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="airport-card">
+                <div class="header-row">
+                    <h3><span class="number">8</span> 青云梯机场</h3>
+                    <a class="btn" href="goto.html?channel=qingyunti" target="_blank">访问官网 →</a>
+                </div>
+                <p>青云梯机场成立于2021年，全IPLC专线，最大提供2.5Gbps速率，无倍率。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
+                        <tr><td>年付小包</td><td>按年付</td><td>¥96.00</td><td>60 GB</td><td>无限制</td></tr>
+                        <tr><td>青云·VIP1</td><td>按月付</td><td>¥25.00</td><td>150 GB</td><td>无限制</td></tr>
+                        <tr><td>青云·VIP2</td><td>按月付</td><td>¥45.00</td><td>300 GB</td><td>无限制</td></tr>
+                        <tr><td>青云·VIP3</td><td>按月付</td><td>¥85.00</td><td>600 GB</td><td>无限制</td></tr>
+                        <tr><td>青云·VIP4</td><td>按月付</td><td>¥150.00</td><td>1000 GB</td><td>无限制</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="airport-card">
+                <div class="header-row">
+                    <h3><span class="number">9</span> 飞鸟机场</h3>
+                    <a class="btn" href="goto.html?channel=flyingbird" target="_blank">访问官网 →</a>
+                </div>
+                <p>FlyingBird飞鸟机场成立于2022年，采用Shadowsocks翻墙协议，专线节点，高速稳定。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
+                        <tr><td>青铜套餐</td><td>按月付</td><td>¥15.00</td><td>100 GB</td><td>无限制</td></tr>
+                        <tr><td>白银套餐</td><td>按月付</td><td>¥30.00</td><td>200 GB</td><td>无限制</td></tr>
+                        <tr><td>黄金套餐</td><td>按月付</td><td>¥75.00</td><td>500 GB</td><td>无限制</td></tr>
+                        <tr><td>钻石套餐</td><td>按月付</td><td>¥150.00</td><td>1000 GB</td><td>无限制</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="airport-card">
+                <div class="header-row">
+                    <h3><span class="number">10</span> 狗狗加速</h3>
+                    <a class="btn" href="goto.html?channel=gougouvpn" target="_blank">访问官网 →</a>
+                </div>
+                <p>狗狗加速成立于2020年，集群负载均衡，不限速，无审计，高速专线，极低延迟。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
+                        <tr><td>标准套餐</td><td>按月付</td><td>¥15.80</td><td>160 GB</td><td>无限制</td></tr>
+                        <tr><td>高级套餐</td><td>按月付</td><td>¥20.80</td><td>200 GB</td><td>无限制</td></tr>
+                        <tr><td>豪华套餐</td><td>按月付</td><td>¥39.80</td><td>500 GB</td><td>无限制</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="airport-card">
+                <div class="header-row">
+                    <h3><span class="number">11</span> 尔湾云机场</h3>
+                    <a class="btn" href="goto.html?channel=erwan" target="_blank">访问官网 →</a>
+                </div>
+                <p>尔湾云机场是一家提供高端线路节点的机场，稳定高速。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
+                        <tr><td>基础套餐</td><td>按月付</td><td>¥24.99</td><td>100 GB</td><td>无限制</td></tr>
+                        <tr><td>标准套餐</td><td>按月付</td><td>¥39.99</td><td>200 GB</td><td>无限制</td></tr>
+                        <tr><td>高级套餐</td><td>按月付</td><td>¥49.99</td><td>350 GB</td><td>无限制</td></tr>
+                        <tr><td>旗舰套餐</td><td>按月付</td><td>¥79.99</td><td>600 GB</td><td>无限制</td></tr>
+                    </table>
+                </div>
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3>2. 疾风云</h3>
-            <p>JFCloud疾风云机场，是实力老牌机场旗下的新开分站，是用低价提供优质中高端翻墙节点的机场梯子工具加速器。</p>
-            <a class="btn" href="goto.html?channel=jfcloud" target="_blank">访问官网</a>
+        <div class="footer">
+            <p>© 2026 Clash官网导航 · 更新时间：2026年4月</p>
         </div>
-        <div class="card">
-            <table>
-                <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
-                <tr><td>入门版</td><td>按月付</td><td>13.99</td><td>50 GB</td><td>2</td></tr>
-                <tr><td>基础版</td><td>按月付</td><td>18.99</td><td>100 GB</td><td>3</td></tr>
-                <tr><td>标准版</td><td>按月付</td><td>29.99</td><td>200 GB</td><td>3</td></tr>
-                <tr><td>高级版</td><td>按月付</td><td>39.99</td><td>350 GB</td><td>5</td></tr>
-                <tr><td>旗舰版</td><td>按月付</td><td>59.99</td><td>600 GB</td><td>8</td></tr>
-                <tr><td>旗舰版大流量</td><td>按月付</td><td>99.99</td><td>1200 GB</td><td>10</td></tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h3>3. 大哥云</h3>
-            <p>大哥云是一家海外团队运营的翻墙机场，提供Trojan翻墙节点，翻墙线路有直连、隧道中转和IPLC内网专线。</p>
-            <a class="btn" href="goto.html?channel=dageyun" target="_blank">访问官网</a>
-        </div>
-        <div class="card">
-            <table>
-                <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
-                <tr><td>VIP1 小流量</td><td>按年付</td><td>88.00</td><td>15 GB</td><td>无限制</td></tr>
-                <tr><td>套餐A</td><td>按月付</td><td>19.90</td><td>100 GB</td><td>无限制</td></tr>
-                <tr><td>套餐A</td><td>按季付</td><td>69.00</td><td>200 GB</td><td>无限制</td></tr>
-                <tr><td>套餐A</td><td>按年付</td><td>199.00</td><td>300 GB</td><td>无限制</td></tr>
-                <tr><td>套餐B</td><td>按月付</td><td>29.90</td><td>150 GB</td><td>无限制</td></tr>
-                <tr><td>套餐B</td><td>按季付</td><td>129.00</td><td>300 GB</td><td>无限制</td></tr>
-                <tr><td>套餐B</td><td>按年付</td><td>299.00</td><td>500 GB</td><td>无限制</td></tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h3>4. 闪狐云</h3>
-            <p>闪狐云通过五大运营商 BGP+IPLC 动态优化和国际多个出口节点，采用TLS协议加密技术。</p>
-            <a class="btn" href="goto.html?channel=flashfox" target="_blank">访问官网</a>
-        </div>
-        <div class="card">
-            <table>
-                <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
-                <tr><td>Basic</td><td>按月付</td><td>20.00</td><td>120 GB</td><td>无限制</td></tr>
-                <tr><td>Standard</td><td>按月付</td><td>40.00</td><td>240 GB</td><td>无限制</td></tr>
-                <tr><td>Advanced</td><td>按月付</td><td>72.00</td><td>500 GB</td><td>无限制</td></tr>
-                <tr><td>Premium</td><td>按月付</td><td>125.00</td><td>1000 GB</td><td>无限制</td></tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h3>5. 肥猫云</h3>
-            <p>肥猫云机场是一家成立于2023年的Clash节点机场，支持Clash一键订阅，支持Trojan协议。</p>
-            <a class="btn" href="goto.html?channel=fatcatcloud" target="_blank">访问官网</a>
-        </div>
-        <div class="card">
-            <table>
-                <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
-                <tr><td>年付加强版</td><td>按年付</td><td>96.00</td><td>60 GB</td><td>无限制</td></tr>
-                <tr><td>基础套餐</td><td>按月付</td><td>20.00</td><td>120 GB</td><td>无限制</td></tr>
-                <tr><td>标准套餐</td><td>按月付</td><td>40.00</td><td>300 GB</td><td>无限制</td></tr>
-                <tr><td>旗舰套餐</td><td>按月付</td><td>100.00</td><td>700 GB</td><td>无限制</td></tr>
-                <tr><td>企业套餐</td><td>按月付</td><td>180.00</td><td>1500 GB</td><td>无限制</td></tr>
-                <tr><td>专享节点</td><td>按月付</td><td>600.00</td><td>500 GB</td><td>无限制</td></tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h3>6. CyberGuard加速器</h3>
-            <p>CyberGuard 机场是一家2023 年开始运营的Shadowsocks 机场，线路有公网中转、IPLC 和IEPL 专线。</p>
-            <a class="btn" href="goto.html?channel=cyberguard" target="_blank">访问官网</a>
-        </div>
-        <div class="card">
-            <table>
-                <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>���时���线</th></tr>
-                <tr><td>轻量套餐</td><td>按月付</td><td>18.00</td><td>100 GB</td><td>无限制</td></tr>
-                <tr><td>标准套餐</td><td>按月付</td><td>28.00</td><td>300 GB</td><td>无限制</td></tr>
-                <tr><td>高速套餐</td><td>按月付</td><td>50.00</td><td>600 GB</td><td>无限制</td></tr>
-                <tr><td>企业套餐</td><td>按月付</td><td>200.00</td><td>2000 GB</td><td>无限制</td></tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h3>7. 龙猫云</h3>
-            <p>Totoro Cloud龙猫云是一家精品小众专线机场，海外团队，采用Shadowsocks协议，IPLC专线节点，对Netflix、Disney+流媒体和ChatGPT解锁支持较好。</p>
-            <a class="btn" href="goto.html?channel=totorocloud" target="_blank">访问官网</a>
-        </div>
-        <div class="card">
-            <table>
-                <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
-                <tr><td>VIP1套餐</td><td>按月付</td><td>15.00</td><td>100 GB</td><td>无限制</td></tr>
-                <tr><td>VIP2套餐</td><td>按月付</td><td>30.00</td><td>200 GB</td><td>无限制</td></tr>
-                <tr><td>VIP3套餐</td><td>按月付</td><td>60.00</td><td>400 GB</td><td>无限制</td></tr>
-                <tr><td>VIP4套餐</td><td>按月付</td><td>120.00</td><td>1000 GB</td><td>无限制</td></tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h3>8. 青云梯机场</h3>
-            <p>青云梯机场成立于2021年, 多年沉淀；全IPLC专线，最大提供2.5GBPs速率，无倍率。</p>
-            <a class="btn" href="goto.html?channel=qingyunti" target="_blank">访问官网</a>
-        </div>
-        <div class="card">
-            <table>
-                <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
-                <tr><td>年付小包</td><td>按年付</td><td>96.00</td><td>60 GB</td><td>无限制</td></tr>
-                <tr><td>青云·VIP1</td><td>按月付</td><td>25.00</td><td>150 GB</td><td>无限制</td></tr>
-                <tr><td>青云·VIP2</td><td>按月付</td><td>45.00</td><td>300 GB</td><td>无限制</td></tr>
-                <tr><td>青云·VIP3</td><td>按月付</td><td>85.00</td><td>600 GB</td><td>无限制</td></tr>
-                <tr><td>青云·VIP4</td><td>按月付</td><td>150.00</td><td>1000 GB</td><td>无限制</td></tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h3>9. 飞鸟机场</h3>
-            <p>FlyingBird飞鸟机场是一家成立于2022年的翻墙机场，采用流行的Shadowsocks翻墙协议，专线节点，高速稳定。</p>
-            <a class="btn" href="goto.html?channel=flyingbird" target="_blank">访问官网</a>
-        </div>
-        <div class="card">
-            <table>
-                <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
-                <tr><td>青铜套餐</td><td>按月付</td><td>15.00</td><td>100 GB</td><td>无限制</td></tr>
-                <tr><td>白银套餐</td><td>按月付</td><td>30.00</td><td>200 GB</td><td>无限制</td></tr>
-                <tr><td>黄金套餐</td><td>按月付</td><td>75.00</td><td>500 GB</td><td>无限制</td></tr>
-                <tr><td>钻石套餐</td><td>按月付</td><td>150.00</td><td>1000 GB</td><td>无限制</td></tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h3>10. 狗狗加速</h3>
-            <p>狗狗加速是一家成立于2020年的翻墙机场，集群负载均衡，不限速，无审计，高速专线，极低延迟。</p>
-            <a class="btn" href="goto.html?channel=gougouvpn" target="_blank">访问官网</a>
-        </div>
-        <div class="card">
-            <table>
-                <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
-                <tr><td>标准套餐</td><td>按月付</td><td>15.80</td><td>160 GB</td><td>无限制</td></tr>
-                <tr><td>高级套餐</td><td>按月付</td><td>20.80</td><td>200 GB</td><td>无限制</td></tr>
-                <tr><td>豪华套餐</td><td>按月付</td><td>39.80</td><td>500 GB</td><td>无限制</td></tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h3>11. 尔湾云机场</h3>
-            <p>尔湾云机场是一家提供高端线路节点的机场，稳定高速。</p>
-            <a class="btn" href="goto.html?channel=erwan" target="_blank">访问官网</a>
-        </div>
-        <div class="card">
-            <table>
-                <tr><th>套餐</th><th>付款周期</th><th>价格</th><th>每月流量</th><th>同时在线</th></tr>
-                <tr><td>基础套餐</td><td>按月付</td><td>24.99</td><td>100 GB</td><td>无限制</td></tr>>
-                <tr><td>标准套餐</td><td>按月付</td><td>39.99</td><td>200 GB</td><td>无限制</td></tr>
-                <tr><td>高级套餐</td><td>按月付</td><td>49.99</td><td>350 GB</td><td>无限制</td></tr>
-                <tr><td>旗舰套餐</td><td>按月付</td><td>79.99</td><td>600 GB</td><td>无限制</td></tr>
-            </table>
-        </div>
-
     </div>
 </body>
 </html>
